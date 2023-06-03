@@ -1,3 +1,5 @@
+let Worksheet = require('./worksheet')
+
 class Workbook{
 
     constructor(name){
@@ -5,11 +7,14 @@ class Workbook{
         this.worksheets = []
     }
 
-    
-
-
 
     addWorksheet(){
-        this.worksheets.push(new Worksheet())
+        this.worksheets.push(new Worksheet)
+    }
+
+    getWorkSheet(){
+        this.worksheets[0];
     }
 }
+
+module.exports = Workbook

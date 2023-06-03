@@ -1,4 +1,4 @@
-class Workbook{
+class Worksheet{
 
     constructor(){
         this.cells= Array.from(Array(10000), () => new Array(10000))
@@ -8,7 +8,11 @@ class Workbook{
 
     getValueOnLocation(location){
         let coords = this.#lettersToNumberLocation(location)
+        if(this.cells[coords[0]][coords[1]] == null){
+            return 0
+        }else{
         return this.cells[coords[0]][coords[1]] 
+        }
 
     }
 
@@ -21,7 +25,11 @@ class Workbook{
         for(var i=locationstart[0]; i <= locationend[0]; i++){
 
             for(var j=locationstart[1]; j <= locationend[1]; j++){
-                values.push(this.cells[i][j])
+                if(this.cells[i][j] !== undefined){
+                    values.push(this.cells[i][j])
+                }else{
+                    values.push(0)
+                }
             }
         }
 
@@ -31,8 +39,10 @@ class Workbook{
 
     addValueToLocation(location, value){
         location = this.#lettersToNumberLocation(location)
-        this.cells[location[0], location[1]] = value
+        this.cells[location[0]][location[1]] = value
     }
+
+    
 
 
 
@@ -49,6 +59,7 @@ class Workbook{
 
         var str = location;
         var res = str.replace(/\D/g, "");
+        res = parseInt(res)
 
         coords.push(res)
 
@@ -56,10 +67,4 @@ class Workbook{
     }
 }
 
-
-
-let workbook = new Workbook();
-
-coords = workbook.getValuesOfGroup("A1", "B5")
-
-console.log(coords)
+module.exports = Worksheet
