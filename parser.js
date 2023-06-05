@@ -6,9 +6,6 @@ var reference = require('./reference.js')
 let workbook = new Workbook
 workbook.addWorksheet()
 let sheet = workbook.worksheets[0]
-sheet.addValueToLocation("A1", 1)
-sheet.addValueToLocation("A2", 2)
-sheet.addValueToLocation("A3", 3)
 
 function findExcelFunctions(str) {
   const regex = /(VLOOKUP|SUM|AVG|TAN|SQRT|AVERAGEIFS)\(([^()]+|\((?:[^()]+|\([^()]*\))*\))*\)/g;
@@ -158,23 +155,26 @@ function parseCellReference(cellRef) {
 
 
 
-// Example usage:
-const excelString = 'SUM(A1:A10) + AVG(B1:B5) * (VLOOKUP(C1,D1:E10,2) + SUM(A1:A5)) + SUM(A1:A2)';
-const resultString = replaceExcelFunctions(excelString);
-const result = eval(resultString);
-console.log(result)
+
+
+
+
+
+
+
+
+sheet.readExcelFile('Map1.xlsx')
+sheet.addValueToLocation(1,8, 'CA-2017-153822')
+console.log(sheet.getValueOnLocation('H1'))
+
 
 // Example usage:
-const excelString2 = 'AVERAGEIFS(A1:A10,A2,A1:A5)';
+console.log(performance.now())
+const excelString2 = 'VLOOKUP(H1,A1:E9995,5)';
 const resultString2 = replaceExcelFunctions(excelString2);
 const result2 = eval(resultString2);
+console.log(performance.now())
 console.log(result2)
-
-
-
-
-
-
 
 
   

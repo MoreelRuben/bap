@@ -1,3 +1,5 @@
+const XLSX = require('xlsx');
+
 class Worksheet{
 
     constructor(){
@@ -37,9 +39,8 @@ class Worksheet{
 
     }
 
-    addValueToLocation(location, value){
-        location = this.#lettersToNumberLocation(location)
-        this.cells[location[0]][location[1]] = value
+    addValueToLocation(x, y, value){
+        this.cells[x][y] = value
     }
 
     
@@ -64,6 +65,32 @@ class Worksheet{
         coords.push(res)
 
         return coords
+    }
+
+
+    readExcelFile(filePath){
+        const workbook = XLSX.readFile(filePath);
+
+        const sheetName = workbook.SheetNames[0];
+
+        // Get the worksheet
+        const worksheet = workbook.Sheets[sheetName];
+
+        const excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+        const nestedArray = excelData.map(row => Object.values(row));
+
+        let i = 0
+        nestedArray.forEach(value => {
+            let j = 0
+            value.forEach(child => {
+                this.addValueToLocation(i, j, child)
+                j++
+            })
+            i++
+        })
+
+
     }
 }
 
